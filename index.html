@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIVE SIGNAL PROVIDED BY HACKER FK.FAHAD</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .asset {
+            margin-bottom: 30px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        #timer {
+            font-size: 18px;
+            margin: 10px;
+        }
+        .signal {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .up {
+            color: green;
+        }
+        .down {
+            color: red;
+        }
+        .hold {
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+    <h1>LIVE SIGNAL PROVIDED BY HACKER FK.FAHAD</h1>
+    <p id="timer">Fetching data... Please wait.</p>
+    
+    <div id="assets"></div>
+    
+    <script>
+        const assets = [
+            'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD', 'USDCAD', 'USDCHF', 'NZDUSD'
+        ];
+        
+        let secondsLeft = 60; // Signal will be given every 1 minute
+        const assetsContainer = document.getElementById('assets');
+
+        // Create a section for each asset
+        assets.forEach(asset => {
+            const assetDiv = document.createElement('div');
+            assetDiv.className = 'asset';
+            assetDiv.id = asset;
+
+            assetDiv.innerHTML = `
+                <h2>${asset}</h2>
+                <p id="${asset}-signal" class="signal">Signal: Waiting...</p>
+                <p id="${asset}-timer" class="signal">Time Left: ${secondsLeft} seconds</p>
+            `;
+
+            assetsContainer.appendChild(assetDiv);
+        });
+
+        // Generate a static signal
+        function generateSignal(asset) {
+            const randomSignal = Math.random();
+            let signalText = '';
+            if (randomSignal > 0.5) {
+                signalText = `<span class="up">Up</span>`;
+            } else if (randomSignal < 0.3) {
+                signalText = `<span class="down">Down</span>`;
+            } else {
+                signalText = `<span class="hold">Hold</span>`;
+            }
+
+            document.getElementById(`${asset}-signal`).innerHTML = `Signal: ${signalText}`;
+        }
+
+        // Update timer and generate signal
+        function updateTimer() {
+            secondsLeft--;
+            if (secondsLeft <= 0) {
+                secondsLeft = 60;
+                assets.forEach(generateSignal);
+            }
+            document.getElementById('timer').textContent = `Next signal in ${secondsLeft} seconds.`;
+            assets.forEach(asset => {
+                document.getElementById(`${asset}-timer`).textContent = `Time Left: ${secondsLeft} seconds`;
+            });
+        }
+
+        // Initialize
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
